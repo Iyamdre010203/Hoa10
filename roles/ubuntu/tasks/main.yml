@@ -1,0 +1,44 @@
+#Ubuntu Nodes
+
+- name: Update package list and install Java
+  apt:
+    update_cache: yes
+    name: openjdk-11-jdk
+    state: present
+
+- name: Install Elasticsearch GPG key
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+- name: Add Elasticsearch repository
+  apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/7.x/apt stable main
+    state: present
+
+- name: Install Elasticsearch
+  apt:
+    name: elasticsearch
+    state: present
+
+- name: Enable and start Elasticsearch service
+  systemd:
+    name: elasticsearch
+    enabled: yes
+    state: started
+
+- name: Install Kibana
+  apt:
+    name: kibana
+    state: present
+
+- name: Enable and start Kibana service
+  systemd:
+    name: kibana
+    enabled: yes
+    state: started
+
+- name: Install Logstash
+  apt:
+    name: logstash
+    state: present
